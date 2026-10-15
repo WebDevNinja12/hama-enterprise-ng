@@ -25,7 +25,7 @@
         <a href="about.html">About Us</a>
         <a href="services.html">Services</a>
         <a href="gallery.html" class="active">Gallery</a>
-        <a href="#">Shop</a>
+        <a href="https://hama-enterprise-store.vercel.app" target="_blank" rel="noopener">Shop</a>
         <a href="contact.html">Contact</a>
       </nav>
     </div>
@@ -46,96 +46,12 @@
         <button data-filter="video">Videos</button>
       </div>
 
-      <div class="gallery-grid">
-        <!-- Images -->
-        <div class="gallery-item" data-type="image">
-          <span class="media-badge">IMAGE</span>
-          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop" alt="Construction project">
-          <div class="gallery-overlay">Project Site</div>
-        </div>
-
-        <div class="gallery-item" data-type="image">
-          <span class="media-badge">IMAGE</span>
-          <img src="https://images.unsplash.com/photo-1581094794329-cd11faed91b5?w=600&h=450&fit=crop" alt="Team work">
-          <div class="gallery-overlay">Our Team</div>
-        </div>
-
-        <!-- Video -->
-        <div class="gallery-item video-item" data-type="video">
-          <span class="media-badge">VIDEO</span>
-          <video muted loop playsinline poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=450&fit=crop">
-            <source src="https://cdn.coverr.co/videos/coverr-warehouse-operations-5627/1080p.mp4" type="video/mp4">
-          </video>
-          <div class="gallery-overlay">
-            <div class="play-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-            <span>Supply Operations</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-type="image">
-          <span class="media-badge">IMAGE</span>
-          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=450&fit=crop" alt="Business meeting">
-          <div class="gallery-overlay">Client Meeting</div>
-        </div>
-
-        <!-- Video -->
-        <div class="gallery-item video-item" data-type="video">
-          <span class="media-badge">VIDEO</span>
-          <video muted loop playsinline poster="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=450&fit=crop">
-            <source src="https://cdn.coverr.co/videos/coverr-construction-site-work-5544/1080p.mp4" type="video/mp4">
-          </video>
-          <div class="gallery-overlay">
-            <div class="play-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-            <span>Project Walkthrough</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-type="image">
-          <span class="media-badge">IMAGE</span>
-          <img src="https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&h=450&fit=crop" alt="Logistics">
-          <div class="gallery-overlay">Logistics</div>
-        </div>
-
-        <div class="gallery-item" data-type="image">
-          <span class="media-badge">IMAGE</span>
-          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=450&fit=crop" alt="Planning">
-          <div class="gallery-overlay">Strategic Planning</div>
-        </div>
-
-        <!-- Video -->
-        <div class="gallery-item video-item" data-type="video">
-          <span class="media-badge">VIDEO</span>
-          <video muted loop playsinline poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=450&fit=crop">
-            <source src="https://cdn.coverr.co/videos/coverr-city-skyline-timelapse-4245/1080p.mp4" type="video/mp4">
-          </video>
-          <div class="gallery-overlay">
-            <div class="play-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-            <span>Infrastructure</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-type="image">
-          <span class="media-badge">IMAGE</span>
-          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&h=450&fit=crop" alt="Office">
-          <div class="gallery-overlay">Office Operations</div>
-        </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <p id="galleryLoading" style="grid-column: 1 / -1; text-align: center; color: var(--gray);">Loading gallery...</p>
       </div>
     </div>
   </section>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-content">
       <button class="lightbox-close" id="lightboxClose">&times;</button>
@@ -166,7 +82,7 @@
         <div class="footer-links">
           <h4>More</h4>
           <a href="gallery.html">Gallery</a>
-          <a href="#">Shop</a>
+          <a href="https://hama-enterprise-store.vercel.app" target="_blank" rel="noopener">Shop</a>
           <a href="contact.html">Contact</a>
         </div>
         <div class="footer-links">
@@ -182,70 +98,119 @@
   </footer>
 
   <script>
+    const STORE_API = 'https://hama-enterprise-store.vercel.app/api/gallery';
+
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
 
-    // Filter tabs
-    const filterBtns = document.querySelectorAll('.gallery-filters button');
-    const items = document.querySelectorAll('.gallery-item');
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-
-        items.forEach(item => {
-          if (filter === 'all' || item.dataset.type === filter) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-      });
-    });
-
-    // Lightbox for images and videos
+    const grid = document.getElementById('galleryGrid');
     const lightbox = document.getElementById('lightbox');
     const lightboxMedia = document.getElementById('lightboxMedia');
     const lightboxClose = document.getElementById('lightboxClose');
 
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        const type = item.dataset.type;
-        lightboxMedia.innerHTML = '';
+    const fallbackItems = [
+      { title: 'Project Site', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop' },
+      { title: 'Our Team', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1581094794329-cd11faed91b5?w=600&h=450&fit=crop' },
+      { title: 'Supply Operations', type: 'VIDEO', url: 'https://cdn.coverr.co/videos/coverr-warehouse-operations-5627/1080p.mp4', poster: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=450&fit=crop' },
+      { title: 'Client Meeting', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=450&fit=crop' },
+      { title: 'Project Walkthrough', type: 'VIDEO', url: 'https://cdn.coverr.co/videos/coverr-construction-site-work-5544/1080p.mp4', poster: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=450&fit=crop' },
+      { title: 'Logistics', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&h=450&fit=crop' },
+    ];
 
-        if (type === 'image') {
-          const img = item.querySelector('img');
-          const clone = document.createElement('img');
-          clone.src = img.src;
-          clone.alt = img.alt;
-          lightboxMedia.appendChild(clone);
+    function renderItems(items) {
+      grid.innerHTML = '';
+      if (!items.length) {
+        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray)">No gallery items yet. Add them from the store admin panel.</p>';
+        return;
+      }
+
+      items.forEach(item => {
+        const type = (item.type || 'IMAGE').toUpperCase();
+        const isVideo = type === 'VIDEO';
+        const el = document.createElement('div');
+        el.className = 'gallery-item' + (isVideo ? ' video-item' : '');
+        el.dataset.type = isVideo ? 'video' : 'image';
+        el.dataset.url = item.url;
+        if (item.poster) el.dataset.poster = item.poster;
+
+        if (isVideo) {
+          el.innerHTML = `
+            <span class="media-badge">VIDEO</span>
+            <video muted loop playsinline ${item.poster ? `poster="${item.poster}"` : ''}>
+              <source src="${item.url}" type="video/mp4">
+            </video>
+            <div class="gallery-overlay">
+              <div class="play-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <span>${item.title || 'Video'}</span>
+            </div>`;
         } else {
-          const video = item.querySelector('video');
-          const clone = document.createElement('video');
-          clone.controls = true;
-          clone.autoplay = true;
-          clone.src = video.querySelector('source').src;
-          lightboxMedia.appendChild(clone);
+          el.innerHTML = `
+            <span class="media-badge">IMAGE</span>
+            <img src="${item.url}" alt="${item.title || 'Gallery image'}">
+            <div class="gallery-overlay">${item.title || 'Image'}</div>`;
         }
 
-        lightbox.classList.add('open');
+        el.addEventListener('click', () => openLightbox(el));
+        grid.appendChild(el);
       });
-    });
+
+      bindFilters();
+    }
+
+    function openLightbox(item) {
+      lightboxMedia.innerHTML = '';
+      const type = item.dataset.type;
+      if (type === 'image') {
+        const img = document.createElement('img');
+        img.src = item.dataset.url || item.querySelector('img').src;
+        lightboxMedia.appendChild(img);
+      } else {
+        const video = document.createElement('video');
+        video.controls = true;
+        video.autoplay = true;
+        video.src = item.dataset.url || item.querySelector('source').src;
+        lightboxMedia.appendChild(video);
+      }
+      lightbox.classList.add('open');
+    }
+
+    function bindFilters() {
+      const filterBtns = document.querySelectorAll('.gallery-filters button');
+      const items = document.querySelectorAll('.gallery-item');
+      filterBtns.forEach(btn => {
+        btn.onclick = () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          items.forEach(item => {
+            if (filter === 'all' || item.dataset.type === filter) item.classList.remove('hidden');
+            else item.classList.add('hidden');
+          });
+        };
+      });
+    }
 
     lightboxClose.addEventListener('click', () => {
       lightbox.classList.remove('open');
       lightboxMedia.innerHTML = '';
     });
-
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) {
         lightbox.classList.remove('open');
         lightboxMedia.innerHTML = '';
       }
     });
+
+    fetch(STORE_API)
+      .then(r => r.json())
+      .then(data => {
+        if (data.items && data.items.length) renderItems(data.items);
+        else renderItems(fallbackItems);
+      })
+      .catch(() => renderItems(fallbackItems));
   </script>
 </body>
 </html>
