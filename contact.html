@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Hama Enterprise.ng</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.jpg" alt="Hama Enterprise.ng Logo">
+        <div class="logo-text">
+          <strong>HAMA</strong>
+          <span>ENTERPRISE.NG</span>
+        </div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding: 4rem 0;">
+    <div class="container">
+      <h1>Get In Touch</h1>
+      <p>We would love to hear from you. Reach out for inquiries, partnerships, or project discussions.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Contact Information</h3>
+          
+          <div class="contact-item">
+            <div class="icon">📍</div>
+            <div>
+              <strong>Address</strong><br>
+              Nigeria
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon">📧</div>
+            <div>
+              <strong>Email</strong><br>
+              info@hamaenterprise.ng
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon">📞</div>
+            <div>
+              <strong>Phone</strong><br>
+              +234 (0) 000 000 0000
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon">🏢</div>
+            <div>
+              <strong>Registration</strong><br>
+              RC: 8827959
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon">🕐</div>
+            <div>
+              <strong>Working Hours</strong><br>
+              Mon – Fri: 8:00 AM – 5:00 PM
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <form id="contactForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required placeholder="Your name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" required placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject">
+                <option value="general">General Inquiry</option>
+                <option value="project">Project / Quotation</option>
+                <option value="partnership">Partnership</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required placeholder="Tell us how we can help you..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="color: white;">
+            <img src="logo.jpg" alt="Hama Enterprise.ng" style="height:40px; background:white; border-radius:6px; padding:4px;">
+            <div class="logo-text">
+              <strong style="color:white;">HAMA</strong>
+              <span>ENTERPRISE.NG</span>
+            </div>
+          </a>
+          <p>Delivering quality solutions and reliable services across Nigeria and beyond.</p>
+          <p style="margin-top:0.5rem; font-size:0.85rem; opacity:0.7;">RC: 8827959</p>
+        </div>
+        <div class="footer-links">
+          <h4>Pages</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About Us</a>
+          <a href="services.html">Services</a>
+        </div>
+        <div class="footer-links">
+          <h4>More</h4>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-links">
+          <h4>Contact</h4>
+          <a href="mailto:info@hamaenterprise.ng">info@hamaenterprise.ng</a>
+          <a href="tel:+2340000000000">+234 (0) 000 000 0000</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Hama Enterprise.ng. All rights reserved. | RC: 8827959
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('Thank you! Your message has been received. Hama Enterprise.ng will get back to you soon.');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
