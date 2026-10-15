@@ -34,52 +34,114 @@
   <section class="hero" style="padding: 0; min-height: 320px; background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('gallery%20banner.png') center/cover no-repeat; display: flex; align-items: center;">
     <div class="container" style="text-align: center;">
       <h1 style="color: white; margin-bottom: 0.75rem;">Our Gallery</h1>
-      <p style="color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto;">A showcase of our projects, activities, and the quality we deliver every day.</p>
+      <p style="color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto;">Photos and videos showcasing our projects, activities, and the quality we deliver every day.</p>
     </div>
   </section>
 
   <section>
     <div class="container">
+      <div class="gallery-filters">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="image">Images</button>
+        <button data-filter="video">Videos</button>
+      </div>
+
       <div class="gallery-grid">
-        <div class="gallery-item">
+        <!-- Images -->
+        <div class="gallery-item" data-type="image">
+          <span class="media-badge">IMAGE</span>
           <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop" alt="Construction project">
           <div class="gallery-overlay">Project Site</div>
         </div>
-        <div class="gallery-item">
+
+        <div class="gallery-item" data-type="image">
+          <span class="media-badge">IMAGE</span>
           <img src="https://images.unsplash.com/photo-1581094794329-cd11faed91b5?w=600&h=450&fit=crop" alt="Team work">
           <div class="gallery-overlay">Our Team</div>
         </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=450&fit=crop" alt="Warehouse">
-          <div class="gallery-overlay">Supply Operations</div>
+
+        <!-- Video -->
+        <div class="gallery-item video-item" data-type="video">
+          <span class="media-badge">VIDEO</span>
+          <video muted loop playsinline poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=450&fit=crop">
+            <source src="https://cdn.coverr.co/videos/coverr-warehouse-operations-5627/1080p.mp4" type="video/mp4">
+          </video>
+          <div class="gallery-overlay">
+            <div class="play-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <span>Supply Operations</span>
+          </div>
         </div>
-        <div class="gallery-item">
+
+        <div class="gallery-item" data-type="image">
+          <span class="media-badge">IMAGE</span>
           <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=450&fit=crop" alt="Business meeting">
           <div class="gallery-overlay">Client Meeting</div>
         </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=450&fit=crop" alt="Building">
-          <div class="gallery-overlay">Completed Works</div>
+
+        <!-- Video -->
+        <div class="gallery-item video-item" data-type="video">
+          <span class="media-badge">VIDEO</span>
+          <video muted loop playsinline poster="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=450&fit=crop">
+            <source src="https://cdn.coverr.co/videos/coverr-construction-site-work-5544/1080p.mp4" type="video/mp4">
+          </video>
+          <div class="gallery-overlay">
+            <div class="play-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <span>Project Walkthrough</span>
+          </div>
         </div>
-        <div class="gallery-item">
+
+        <div class="gallery-item" data-type="image">
+          <span class="media-badge">IMAGE</span>
           <img src="https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&h=450&fit=crop" alt="Logistics">
           <div class="gallery-overlay">Logistics</div>
         </div>
-        <div class="gallery-item">
+
+        <div class="gallery-item" data-type="image">
+          <span class="media-badge">IMAGE</span>
           <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=450&fit=crop" alt="Planning">
           <div class="gallery-overlay">Strategic Planning</div>
         </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=450&fit=crop" alt="Modern building">
-          <div class="gallery-overlay">Infrastructure</div>
+
+        <!-- Video -->
+        <div class="gallery-item video-item" data-type="video">
+          <span class="media-badge">VIDEO</span>
+          <video muted loop playsinline poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=450&fit=crop">
+            <source src="https://cdn.coverr.co/videos/coverr-city-skyline-timelapse-4245/1080p.mp4" type="video/mp4">
+          </video>
+          <div class="gallery-overlay">
+            <div class="play-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <span>Infrastructure</span>
+          </div>
         </div>
-        <div class="gallery-item">
+
+        <div class="gallery-item" data-type="image">
+          <span class="media-badge">IMAGE</span>
           <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&h=450&fit=crop" alt="Office">
           <div class="gallery-overlay">Office Operations</div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose">&times;</button>
+      <div id="lightboxMedia"></div>
+    </div>
+  </div>
 
   <footer>
     <div class="container">
@@ -123,6 +185,67 @@
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+    // Filter tabs
+    const filterBtns = document.querySelectorAll('.gallery-filters button');
+    const items = document.querySelectorAll('.gallery-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        items.forEach(item => {
+          if (filter === 'all' || item.dataset.type === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Lightbox for images and videos
+    const lightbox = document.getElementById('lightbox');
+    const lightboxMedia = document.getElementById('lightboxMedia');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const type = item.dataset.type;
+        lightboxMedia.innerHTML = '';
+
+        if (type === 'image') {
+          const img = item.querySelector('img');
+          const clone = document.createElement('img');
+          clone.src = img.src;
+          clone.alt = img.alt;
+          lightboxMedia.appendChild(clone);
+        } else {
+          const video = item.querySelector('video');
+          const clone = document.createElement('video');
+          clone.controls = true;
+          clone.autoplay = true;
+          clone.src = video.querySelector('source').src;
+          lightboxMedia.appendChild(clone);
+        }
+
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightboxClose.addEventListener('click', () => {
+      lightbox.classList.remove('open');
+      lightboxMedia.innerHTML = '';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('open');
+        lightboxMedia.innerHTML = '';
+      }
+    });
   </script>
 </body>
 </html>
