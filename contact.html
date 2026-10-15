@@ -107,7 +107,7 @@
         </div>
 
         <div class="contact-form">
-          <form id="contactForm" onsubmit="handleSubmit(event)">
+          <form id="contactForm" action="https://formspree.io/f/xljgagdw" method="POST">
             <div class="form-group">
               <label for="name">Full Name</label>
               <input type="text" id="name" name="name" required placeholder="Your name">
@@ -178,12 +178,6 @@
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
-
-    function handleSubmit(e) {
-      e.preventDefault();
-      alert('Thank you! Your message has been received. Hama Enterprise.ng will get back to you soon.');
-      e.target.reset();
-    }
   </script>
 </body>
 </html>
