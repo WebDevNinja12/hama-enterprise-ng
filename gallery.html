@@ -6,6 +6,46 @@
   <title>Gallery | Hama Enterprise.ng</title>
   <link rel="icon" type="image/png" href="/logo.png">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .gallery-item .narration {
+      display: block;
+      padding: 0.75rem 1rem 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--gray, #555);
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+    .gallery-item {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .gallery-item .media-wrap {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #0f172a;
+    }
+    .gallery-item .media-wrap img,
+    .gallery-item .media-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .lightbox-caption {
+      margin-top: 0.75rem;
+      color: #e2e8f0;
+      text-align: center;
+      max-width: 560px;
+      line-height: 1.5;
+    }
+    .lightbox-title {
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -56,6 +96,7 @@
     <div class="lightbox-content">
       <button class="lightbox-close" id="lightboxClose">&times;</button>
       <div id="lightboxMedia"></div>
+      <div id="lightboxCaption" class="lightbox-caption"></div>
     </div>
   </div>
 
@@ -107,53 +148,65 @@
     const grid = document.getElementById('galleryGrid');
     const lightbox = document.getElementById('lightbox');
     const lightboxMedia = document.getElementById('lightboxMedia');
+    const lightboxCaption = document.getElementById('lightboxCaption');
     const lightboxClose = document.getElementById('lightboxClose');
 
     const fallbackItems = [
-      { title: 'Project Site', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop' },
-      { title: 'Our Team', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1581094794329-cd11faed91b5?w=600&h=450&fit=crop' },
-      { title: 'Supply Operations', type: 'VIDEO', url: 'https://cdn.coverr.co/videos/coverr-warehouse-operations-5627/1080p.mp4', poster: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=450&fit=crop' },
-      { title: 'Client Meeting', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=450&fit=crop' },
-      { title: 'Project Walkthrough', type: 'VIDEO', url: 'https://cdn.coverr.co/videos/coverr-construction-site-work-5544/1080p.mp4', poster: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=450&fit=crop' },
-      { title: 'Logistics', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&h=450&fit=crop' },
+      { title: 'Project Site', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop', narration: 'On-site work showcasing Hama Enterprise project delivery.' },
+      { title: 'Our Team', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1581094794329-cd11faed91b5?w=600&h=450&fit=crop', narration: 'The team behind quality solutions across industries.' },
     ];
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
     function renderItems(items) {
       grid.innerHTML = '';
       if (!items.length) {
-        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray)">No gallery items yet. Add them from the store admin panel.</p>';
+        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray)">No gallery items yet.</p>';
         return;
       }
 
       items.forEach(item => {
         const type = (item.type || 'IMAGE').toUpperCase();
         const isVideo = type === 'VIDEO';
+        const narration = item.narration || '';
         const el = document.createElement('div');
         el.className = 'gallery-item' + (isVideo ? ' video-item' : '');
         el.dataset.type = isVideo ? 'video' : 'image';
         el.dataset.url = item.url;
+        el.dataset.title = item.title || '';
+        el.dataset.narration = narration;
         if (item.poster) el.dataset.poster = item.poster;
 
-        if (isVideo) {
-          el.innerHTML = `
-            <span class="media-badge">VIDEO</span>
-            <video muted loop playsinline preload="none" loading="lazy" ${item.poster ? `poster="${item.poster}"` : ''}>
-              <source src="${item.url}" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-              <div class="play-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-              <span>${item.title || 'Video'}</span>
-            </div>`;
-        } else {
-          el.innerHTML = `
-            <span class="media-badge">IMAGE</span>
-            <img src="${item.url}" alt="${item.title || 'Gallery image'}" loading="lazy">
-            <div class="gallery-overlay">${item.title || 'Image'}</div>`;
-        }
+        const mediaHtml = isVideo
+          ? `<span class="media-badge">VIDEO</span>
+             <video muted loop playsinline preload="none" ${item.poster ? `poster="${escapeHtml(item.poster)}"` : ''}>
+               <source src="${escapeHtml(item.url)}" type="video/mp4">
+             </video>
+             <div class="gallery-overlay">
+               <div class="play-btn">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+               </div>
+               <span>${escapeHtml(item.title || 'Video')}</span>
+             </div>`
+          : `<span class="media-badge">IMAGE</span>
+             <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.title || 'Gallery image')}" loading="lazy">
+             <div class="gallery-overlay">${escapeHtml(item.title || 'Image')}</div>`;
 
-        el.addEventListener('click', () => openLightbox(el));
+        el.innerHTML = `
+          <div class="media-wrap">${mediaHtml}</div>
+          ${narration ? `<div class="narration">${escapeHtml(narration)}</div>` : ''}
+        `;
+
+        el.addEventListener('click', (e) => {
+          if (e.target.closest('video') && e.target.tagName === 'VIDEO') return;
+          openLightbox(el);
+        });
         grid.appendChild(el);
       });
 
@@ -165,7 +218,7 @@
       const type = item.dataset.type;
       if (type === 'image') {
         const img = document.createElement('img');
-        img.src = item.dataset.url || item.querySelector('img').src;
+        img.src = item.dataset.url;
         img.loading = 'lazy';
         lightboxMedia.appendChild(img);
       } else {
@@ -173,10 +226,14 @@
         video.controls = true;
         video.autoplay = true;
         video.preload = 'metadata';
-        video.setAttribute('loading', 'lazy');
-        video.src = item.dataset.url || item.querySelector('source').src;
+        video.src = item.dataset.url;
         lightboxMedia.appendChild(video);
       }
+      const title = item.dataset.title || '';
+      const narration = item.dataset.narration || '';
+      lightboxCaption.innerHTML = title
+        ? `<div class="lightbox-title">${escapeHtml(title)}</div>${narration ? escapeHtml(narration) : ''}`
+        : (narration ? escapeHtml(narration) : '');
       lightbox.classList.add('open');
     }
 
@@ -199,11 +256,13 @@
     lightboxClose.addEventListener('click', () => {
       lightbox.classList.remove('open');
       lightboxMedia.innerHTML = '';
+      lightboxCaption.innerHTML = '';
     });
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) {
         lightbox.classList.remove('open');
         lightboxMedia.innerHTML = '';
+        lightboxCaption.innerHTML = '';
       }
     });
 
