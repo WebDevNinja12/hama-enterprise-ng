@@ -270,6 +270,54 @@ section {
   margin-bottom: 0.75rem;
 }
 
+/* Mission Vision Values */
+.mvv-section {
+  background: #e8f7fc;
+}
+
+.mvv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+.mvv-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--primary);
+}
+
+.mvv-card h3 {
+  color: var(--secondary);
+  margin-bottom: 0.85rem;
+  font-size: 1.25rem;
+}
+
+.mvv-card p {
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.values-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.values-list li {
+  color: var(--text);
+  line-height: 1.55;
+  padding-left: 0.25rem;
+  border-left: 3px solid var(--primary);
+  padding-left: 0.75rem;
+}
+
+.values-list strong {
+  color: var(--secondary);
+}
+
 .testimonials {
   background: #f1f5f9;
 }
