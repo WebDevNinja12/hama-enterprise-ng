@@ -7,6 +7,30 @@
   <link rel="icon" type="image/png" href="/logo.png">
   <link rel="stylesheet" href="styles.css">
   <style>
+    .gallery-item {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .gallery-item .media-wrap {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: #0f172a;
+    }
+    .gallery-item .media-wrap img,
+    .gallery-item .media-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-item .media-wrap video {
+      background: #000;
+    }
     .gallery-item .narration {
       display: block;
       padding: 0.75rem 1rem 1rem;
@@ -16,34 +40,49 @@
       background: #f8fafc;
       border-top: 1px solid #e2e8f0;
     }
-    .gallery-item {
+    .gallery-item .item-title {
+      padding: 0.65rem 1rem 0;
+      font-weight: 600;
+      color: #0f172a;
+      font-size: 0.95rem;
+    }
+    .video-controls-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 0.5rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.65));
       display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      gap: 0.5rem;
+      z-index: 2;
     }
-    .gallery-item .media-wrap {
-      position: relative;
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      background: #0f172a;
-    }
-    .gallery-item .media-wrap img,
-    .gallery-item .media-wrap video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .video-controls-bar button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #06b6d4;
+      color: #000;
     }
     .lightbox-caption {
       margin-top: 0.75rem;
       color: #e2e8f0;
       text-align: center;
-      max-width: 560px;
+      max-width: 640px;
       line-height: 1.5;
     }
     .lightbox-title {
       font-weight: 700;
       color: #fff;
       margin-bottom: 0.35rem;
+    }
+    .lightbox video {
+      max-width: 100%;
+      max-height: 70vh;
+      background: #000;
     }
   </style>
 </head>
@@ -152,8 +191,19 @@
     const lightboxClose = document.getElementById('lightboxClose');
 
     const fallbackItems = [
-      { title: 'Project Site', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop', narration: 'On-site work showcasing Hama Enterprise project delivery.' },
-      { title: 'Our Team', type: 'IMAGE', url: 'https://images.unsplash.com/photo-1581094794329-cd11faed91b5?w=600&h=450&fit=crop', narration: 'The team behind quality solutions across industries.' },
+      {
+        title: 'Warehouse operations',
+        type: 'VIDEO',
+        url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+        poster: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=450&fit=crop',
+        narration: 'Sample playable video — replace with your project videos from the store admin gallery.'
+      },
+      {
+        title: 'Project Site',
+        type: 'IMAGE',
+        url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop',
+        narration: 'On-site work showcasing Hama Enterprise project delivery.'
+      }
     ];
 
     function escapeHtml(str) {
@@ -164,6 +214,16 @@
         .replace(/"/g, '&quot;');
     }
 
+    function detectVideoType(url) {
+      const u = String(url || '').toLowerCase();
+      if (u.startsWith('data:video/webm')) return 'video/webm';
+      if (u.startsWith('data:video/ogg')) return 'video/ogg';
+      if (u.startsWith('data:video/')) return 'video/mp4';
+      if (u.includes('.webm')) return 'video/webm';
+      if (u.includes('.ogg') || u.includes('.ogv')) return 'video/ogg';
+      return 'video/mp4';
+    }
+
     function renderItems(items) {
       grid.innerHTML = '';
       if (!items.length) {
@@ -171,7 +231,7 @@
         return;
       }
 
-      items.forEach(item => {
+      items.forEach((item, index) => {
         const type = (item.type || 'IMAGE').toUpperCase();
         const isVideo = type === 'VIDEO';
         const narration = item.narration || '';
@@ -183,34 +243,72 @@
         el.dataset.narration = narration;
         if (item.poster) el.dataset.poster = item.poster;
 
-        const mediaHtml = isVideo
-          ? `<span class="media-badge">VIDEO</span>
-             <video muted loop playsinline preload="none" ${item.poster ? `poster="${escapeHtml(item.poster)}"` : ''}>
-               <source src="${escapeHtml(item.url)}" type="video/mp4">
-             </video>
-             <div class="gallery-overlay">
-               <div class="play-btn">
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-               </div>
-               <span>${escapeHtml(item.title || 'Video')}</span>
-             </div>`
-          : `<span class="media-badge">IMAGE</span>
-             <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.title || 'Gallery image')}" loading="lazy">
-             <div class="gallery-overlay">${escapeHtml(item.title || 'Image')}</div>`;
+        if (isVideo) {
+          const vType = detectVideoType(item.url);
+          const posterAttr = item.poster ? ` poster="${escapeHtml(item.poster)}"` : '';
+          el.innerHTML = `
+            <div class="media-wrap">
+              <span class="media-badge">VIDEO</span>
+              <video id="vid-${index}" playsinline preload="metadata"${posterAttr}>
+                <source src="${escapeHtml(item.url)}" type="${vType}">
+                Your browser does not support this video.
+              </video>
+              <div class="video-controls-bar">
+                <button type="button" data-play="${index}">Play</button>
+                <button type="button" data-open="${index}">Fullscreen</button>
+              </div>
+            </div>
+            <div class="item-title">${escapeHtml(item.title || 'Video')}</div>
+            ${narration ? `<div class="narration">${escapeHtml(narration)}</div>` : ''}
+          `;
+        } else {
+          el.innerHTML = `
+            <div class="media-wrap" style="cursor:pointer">
+              <span class="media-badge">IMAGE</span>
+              <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.title || 'Gallery image')}" loading="lazy">
+            </div>
+            <div class="item-title">${escapeHtml(item.title || 'Image')}</div>
+            ${narration ? `<div class="narration">${escapeHtml(narration)}</div>` : ''}
+          `;
+          el.querySelector('.media-wrap').addEventListener('click', () => openLightbox(el));
+        }
 
-        el.innerHTML = `
-          <div class="media-wrap">${mediaHtml}</div>
-          ${narration ? `<div class="narration">${escapeHtml(narration)}</div>` : ''}
-        `;
-
-        el.addEventListener('click', (e) => {
-          if (e.target.closest('video') && e.target.tagName === 'VIDEO') return;
-          openLightbox(el);
-        });
         grid.appendChild(el);
       });
 
+      grid.querySelectorAll('[data-play]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = btn.getAttribute('data-play');
+          const video = document.getElementById('vid-' + idx);
+          if (!video) return;
+          if (video.paused) {
+            video.play().catch(() => openLightboxFromVideo(video));
+            btn.textContent = 'Pause';
+          } else {
+            video.pause();
+            btn.textContent = 'Play';
+          }
+        });
+      });
+
+      grid.querySelectorAll('[data-open]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = btn.getAttribute('data-open');
+          const video = document.getElementById('vid-' + idx);
+          if (!video) return;
+          const parent = video.closest('.gallery-item');
+          if (parent) openLightbox(parent);
+        });
+      });
+
       bindFilters();
+    }
+
+    function openLightboxFromVideo(video) {
+      const parent = video.closest('.gallery-item');
+      if (parent) openLightbox(parent);
     }
 
     function openLightbox(item) {
@@ -225,9 +323,16 @@
         const video = document.createElement('video');
         video.controls = true;
         video.autoplay = true;
-        video.preload = 'metadata';
-        video.src = item.dataset.url;
+        video.playsInline = true;
+        video.preload = 'auto';
+        const source = document.createElement('source');
+        source.src = item.dataset.url;
+        source.type = detectVideoType(item.dataset.url);
+        video.appendChild(source);
+        if (item.dataset.poster) video.poster = item.dataset.poster;
         lightboxMedia.appendChild(video);
+        video.load();
+        video.play().catch(() => {});
       }
       const title = item.dataset.title || '';
       const narration = item.dataset.narration || '';
@@ -253,17 +358,20 @@
       });
     }
 
-    lightboxClose.addEventListener('click', () => {
+    function closeLightbox() {
       lightbox.classList.remove('open');
+      lightboxMedia.querySelectorAll('video').forEach((v) => {
+        v.pause();
+        v.removeAttribute('src');
+        v.load();
+      });
       lightboxMedia.innerHTML = '';
       lightboxCaption.innerHTML = '';
-    });
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        lightbox.classList.remove('open');
-        lightboxMedia.innerHTML = '';
-        lightboxCaption.innerHTML = '';
-      }
+      if (e.target === lightbox) closeLightbox();
     });
 
     fetch(STORE_API)
