@@ -137,7 +137,7 @@
         if (isVideo) {
           el.innerHTML = `
             <span class="media-badge">VIDEO</span>
-            <video muted loop playsinline preload="none" ${item.poster ? `poster="${item.poster}"` : ''}>
+            <video muted loop playsinline preload="none" loading="lazy" ${item.poster ? `poster="${item.poster}"` : ''}>
               <source src="${item.url}" type="video/mp4">
             </video>
             <div class="gallery-overlay">
@@ -172,6 +172,8 @@
         const video = document.createElement('video');
         video.controls = true;
         video.autoplay = true;
+        video.preload = 'metadata';
+        video.setAttribute('loading', 'lazy');
         video.src = item.dataset.url || item.querySelector('source').src;
         lightboxMedia.appendChild(video);
       }
