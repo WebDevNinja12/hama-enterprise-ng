@@ -59,6 +59,79 @@
     </div>
   </section>
 
+  <section class="executives-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Leadership</h2>
+        <p>Meet the executives guiding Hama Enterprise.ng.</p>
+      </div>
+
+      <div class="exec-carousel" id="execCarousel">
+        <!-- Slide 1: Founder — replace image src when you have the real photo -->
+        <div class="exec-slide active">
+          <div class="exec-card">
+            <div class="exec-photo">
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=faces" alt="Founder" loading="lazy">
+            </div>
+            <div class="exec-info">
+              <h3>Founder &amp; CEO</h3>
+              <p class="exec-role">Founder</p>
+              <p class="exec-bio">Leading Hama Enterprise.ng with a vision for quality, integrity, and growth across Construction, Info Tech, Logistics, and Product Sales.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Co-Founder / Executive -->
+        <div class="exec-slide">
+          <div class="exec-card">
+            <div class="exec-photo">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=faces" alt="Co-Founder" loading="lazy">
+            </div>
+            <div class="exec-info">
+              <h3>Co-Founder</h3>
+              <p class="exec-role">Executive Director</p>
+              <p class="exec-bio">Supporting strategy and operations to ensure every project and service meets the highest standards.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Operations -->
+        <div class="exec-slide">
+          <div class="exec-card">
+            <div class="exec-photo">
+              <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=faces" alt="Operations Lead" loading="lazy">
+            </div>
+            <div class="exec-info">
+              <h3>Head of Operations</h3>
+              <p class="exec-role">Operations</p>
+              <p class="exec-bio">Overseeing day-to-day delivery across our four sectors and keeping clients at the centre of everything we do.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Technical / IT -->
+        <div class="exec-slide">
+          <div class="exec-card">
+            <div class="exec-photo">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces" alt="Technical Lead" loading="lazy">
+            </div>
+            <div class="exec-info">
+              <h3>Technical Lead</h3>
+              <p class="exec-role">Info Tech</p>
+              <p class="exec-bio">Driving technology solutions and systems that keep our services efficient and future-ready.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exec-controls">
+        <button type="button" class="exec-btn" id="execPrev" aria-label="Previous executive">‹</button>
+        <div class="exec-dots" id="execDots"></div>
+        <button type="button" class="exec-btn" id="execNext" aria-label="Next executive">›</button>
+      </div>
+    </div>
+  </section>
+
   <section style="background: #f1f5f9;">
     <div class="container">
       <div class="section-title">
@@ -103,10 +176,55 @@
       <div class="footer-bottom">&copy; 2026 Hama Enterprise.ng. All rights reserved. | RC: 8827959</div>
     </div>
   </footer>
+
   <script>
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+    // Executives fade carousel
+    (function () {
+      const slides = document.querySelectorAll('.exec-slide');
+      const dotsWrap = document.getElementById('execDots');
+      const prevBtn = document.getElementById('execPrev');
+      const nextBtn = document.getElementById('execNext');
+      if (!slides.length) return;
+
+      let index = 0;
+      let timer;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'exec-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Show executive ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+      });
+
+      const dots = dotsWrap.querySelectorAll('.exec-dot');
+
+      function goTo(i) {
+        slides[index].classList.remove('active');
+        dots[index].classList.remove('active');
+        index = (i + slides.length) % slides.length;
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        resetTimer();
+      }
+
+      function next() { goTo(index + 1); }
+      function prev() { goTo(index - 1); }
+
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(next, 4500);
+      }
+
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
+      resetTimer();
+    })();
   </script>
 </body>
 </html>
