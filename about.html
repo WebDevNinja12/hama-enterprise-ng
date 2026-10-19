@@ -43,17 +43,30 @@
       <div class="about-grid">
         <div class="about-content">
           <h2>Our Story</h2>
-          <p>Hama Enterprise.ng was established with a clear vision: to deliver reliable, high-quality services that support businesses and communities across Nigeria.</p>
-          <p>Registered under RC: 8827959, we operate with full corporate compliance and a strong commitment to professionalism in everything we do.</p>
+          <p>Hama Enterprise.ng was founded by <strong>two people</strong> in <strong>2025</strong> (RC: 8827959) with a clear vision: to deliver reliable, high-quality services that support businesses and communities across Nigeria.</p>
+          <p>We operate across four main sectors — Construction, Information Technology, Logistics, and Product Sales — with dedicated heads leading each area.</p>
           <p>Our team combines experience, innovation, and a deep understanding of the local market to create solutions that truly make a difference.</p>
           <div class="stats">
-            <div class="stat"><div class="stat-number">RC</div><div class="stat-label">8827959</div></div>
-            <div class="stat"><div class="stat-number">100%</div><div class="stat-label">Commitment</div></div>
-            <div class="stat"><div class="stat-number">Nigeria</div><div class="stat-label">Based</div></div>
+            <div class="stat"><div class="stat-number">2</div><div class="stat-label">Founders</div></div>
+            <div class="stat"><div class="stat-number">4</div><div class="stat-label">Sectors</div></div>
+            <div class="stat"><div class="stat-number">2025</div><div class="stat-label">Founded</div></div>
           </div>
         </div>
-        <div class="about-image">
-          <img src="logo.png" alt="Hama Enterprise Logo" style="max-width: 280px; border-radius: 12px;" loading="lazy">
+
+        <!-- Promo video area — loaded from store admin (About Video) -->
+        <div class="about-video-wrap" id="aboutVideoWrap">
+          <div class="about-video-placeholder" id="aboutVideoPlaceholder">
+            <p>Company promo video</p>
+            <span>Upload from Admin → About Video</span>
+          </div>
+          <video
+            id="aboutPromoVideo"
+            controls
+            playsinline
+            preload="none"
+            loading="lazy"
+            style="display:none;"
+          ></video>
         </div>
       </div>
     </div>
@@ -63,71 +76,99 @@
     <div class="container">
       <div class="section-title">
         <h2>Our Leadership</h2>
-        <p>Meet the executives guiding Hama Enterprise.ng.</p>
+        <p>Two founders and the heads of our four sectors.</p>
       </div>
 
       <div class="exec-carousel" id="execCarousel">
-        <!-- Slide 1: Founder — replace image src when you have the real photo -->
+        <!-- Founder 1 -->
         <div class="exec-slide active">
           <div class="exec-card">
             <div class="exec-photo">
-              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=faces" alt="Founder" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=faces" alt="Founder 1" loading="lazy">
             </div>
             <div class="exec-info">
-              <h3>Founder &amp; CEO</h3>
-              <p class="exec-role">Founder</p>
-              <p class="exec-bio">Leading Hama Enterprise.ng with a vision for quality, integrity, and growth across Construction, Info Tech, Logistics, and Product Sales.</p>
+              <h3>Founder</h3>
+              <p class="exec-role">Co-Founder</p>
+              <p class="exec-bio">One of the two founders of Hama Enterprise.ng. Guiding the company with a focus on integrity, growth, and quality across all sectors.</p>
             </div>
           </div>
         </div>
 
-        <!-- Slide 2: Co-Founder / Executive -->
+        <!-- Founder 2 -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=faces" alt="Co-Founder" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=faces" alt="Founder 2" loading="lazy">
             </div>
             <div class="exec-info">
-              <h3>Co-Founder</h3>
-              <p class="exec-role">Executive Director</p>
-              <p class="exec-bio">Supporting strategy and operations to ensure every project and service meets the highest standards.</p>
+              <h3>Founder</h3>
+              <p class="exec-role">Co-Founder</p>
+              <p class="exec-bio">Co-founder of Hama Enterprise.ng. Working alongside the leadership team to build lasting partnerships and deliver excellent service.</p>
             </div>
           </div>
         </div>
 
-        <!-- Slide 3: Operations -->
+        <!-- Head of Construction -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
-              <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=faces" alt="Operations Lead" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=faces" alt="Head of Construction" loading="lazy">
             </div>
             <div class="exec-info">
-              <h3>Head of Operations</h3>
-              <p class="exec-role">Operations</p>
-              <p class="exec-bio">Overseeing day-to-day delivery across our four sectors and keeping clients at the centre of everything we do.</p>
+              <h3>Head of Construction</h3>
+              <p class="exec-role">Construction Sector</p>
+              <p class="exec-bio">Leads building and development projects, ensuring quality, safety, and timely delivery for every client.</p>
             </div>
           </div>
         </div>
 
-        <!-- Slide 4: Technical / IT -->
+        <!-- Head of Info Tech -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces" alt="Technical Lead" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces" alt="Head of Info Tech" loading="lazy">
             </div>
             <div class="exec-info">
-              <h3>Technical Lead</h3>
-              <p class="exec-role">Info Tech</p>
-              <p class="exec-bio">Driving technology solutions and systems that keep our services efficient and future-ready.</p>
+              <h3>Head of Info Tech</h3>
+              <p class="exec-role">Information Technology Sector</p>
+              <p class="exec-bio">Drives technology solutions and support that keep operations efficient and clients connected.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Head of Logistics -->
+        <div class="exec-slide">
+          <div class="exec-card">
+            <div class="exec-photo">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=faces" alt="Head of Logistics" loading="lazy">
+            </div>
+            <div class="exec-info">
+              <h3>Head of Logistics</h3>
+              <p class="exec-role">Logistics Sector</p>
+              <p class="exec-bio">Oversees movement of goods with a focus on reliability, speed, and dependable delivery nationwide.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Head of Product Sales -->
+        <div class="exec-slide">
+          <div class="exec-card">
+            <div class="exec-photo">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=faces" alt="Head of Product Sales" loading="lazy">
+            </div>
+            <div class="exec-info">
+              <h3>Head of Product Sales</h3>
+              <p class="exec-role">Product Sales Sector</p>
+              <p class="exec-bio">Leads sourcing and supply of quality products to meet the needs of businesses and partners.</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="exec-controls">
-        <button type="button" class="exec-btn" id="execPrev" aria-label="Previous executive">‹</button>
+        <button type="button" class="exec-btn" id="execPrev" aria-label="Previous">‹</button>
         <div class="exec-dots" id="execDots"></div>
-        <button type="button" class="exec-btn" id="execNext" aria-label="Next executive">›</button>
+        <button type="button" class="exec-btn" id="execNext" aria-label="Next">›</button>
       </div>
     </div>
   </section>
@@ -197,7 +238,7 @@
         const dot = document.createElement('button');
         dot.type = 'button';
         dot.className = 'exec-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', 'Show executive ' + (i + 1));
+        dot.setAttribute('aria-label', 'Show person ' + (i + 1));
         dot.addEventListener('click', () => goTo(i));
         dotsWrap.appendChild(dot);
       });
@@ -224,6 +265,28 @@
       prevBtn.addEventListener('click', prev);
       nextBtn.addEventListener('click', next);
       resetTimer();
+    })();
+
+    // Load About promo video from store API (admin-managed)
+    (function () {
+      const API = 'https://hama-enterprise-store.vercel.app/api/about-video';
+      const video = document.getElementById('aboutPromoVideo');
+      const placeholder = document.getElementById('aboutVideoPlaceholder');
+      if (!video) return;
+
+      fetch(API)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && data.url) {
+            video.src = data.url;
+            if (data.poster) video.poster = data.poster;
+            video.style.display = 'block';
+            if (placeholder) placeholder.style.display = 'none';
+          }
+        })
+        .catch(function () {
+          /* keep placeholder if API unavailable */
+        });
     })();
   </script>
 </body>
