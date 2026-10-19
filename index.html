@@ -65,6 +65,26 @@
     </div>
   </section>
 
+  <!-- Animated counters: count from 0 when scrolled into view -->
+  <section class="counters-section" id="countersSection">
+    <div class="container">
+      <div class="counters-grid">
+        <div class="counter-item">
+          <div class="counter-number" data-target="120" data-suffix="+">0</div>
+          <div class="counter-label">Projects Completed</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-number" data-target="85" data-suffix="+">0</div>
+          <div class="counter-label">Happy Clients</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-number" data-target="98" data-suffix="%">0</div>
+          <div class="counter-label">Goal Achievement</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="container">
       <div class="section-title">
@@ -260,6 +280,53 @@
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+    // Counter animation from 0 when scrolled into view
+    (function () {
+      var section = document.getElementById('countersSection');
+      if (!section) return;
+      var numbers = section.querySelectorAll('.counter-number');
+      var done = false;
+
+      function animateCount(el) {
+        var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+        var suffix = el.getAttribute('data-suffix') || '';
+        var duration = 1800;
+        var start = 0;
+        var startTime = null;
+
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - progress, 3);
+          var value = Math.floor(ease * target);
+          el.textContent = value + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+          else el.textContent = target + suffix;
+        }
+        requestAnimationFrame(step);
+      }
+
+      function startAll() {
+        if (done) return;
+        done = true;
+        numbers.forEach(animateCount);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              startAll();
+              obs.unobserve(section);
+            }
+          });
+        }, { threshold: 0.35 });
+        obs.observe(section);
+      } else {
+        startAll();
+      }
+    })();
   </script>
 </body>
 </html>

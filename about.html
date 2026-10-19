@@ -53,7 +53,6 @@
           </div>
         </div>
 
-        <!-- Promo video area — loaded from store admin (About Video) -->
         <div class="about-video-wrap" id="aboutVideoWrap">
           <div class="about-video-placeholder" id="aboutVideoPlaceholder">
             <p>Company promo video</p>
@@ -63,8 +62,8 @@
             id="aboutPromoVideo"
             controls
             playsinline
-            preload="none"
-            loading="lazy"
+            muted
+            preload="metadata"
             style="display:none;"
           ></video>
         </div>
@@ -80,7 +79,6 @@
       </div>
 
       <div class="exec-carousel" id="execCarousel">
-        <!-- Founder 1 -->
         <div class="exec-slide active">
           <div class="exec-card">
             <div class="exec-photo">
@@ -94,7 +92,6 @@
           </div>
         </div>
 
-        <!-- Founder 2 -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -108,7 +105,6 @@
           </div>
         </div>
 
-        <!-- Head of Construction -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -122,7 +118,6 @@
           </div>
         </div>
 
-        <!-- Head of Info Tech -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -136,7 +131,6 @@
           </div>
         </div>
 
-        <!-- Head of Logistics -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -150,7 +144,6 @@
           </div>
         </div>
 
-        <!-- Head of Product Sales -->
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -223,7 +216,6 @@
     const nav = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
 
-    // Executives fade carousel
     (function () {
       const slides = document.querySelectorAll('.exec-slide');
       const dotsWrap = document.getElementById('execDots');
@@ -267,12 +259,26 @@
       resetTimer();
     })();
 
-    // Load About promo video from store API (admin-managed)
+    // Load video + autoplay when section is scrolled into view
     (function () {
       const API = 'https://hama-enterprise-store.vercel.app/api/about-video';
       const video = document.getElementById('aboutPromoVideo');
       const placeholder = document.getElementById('aboutVideoPlaceholder');
-      if (!video) return;
+      const wrap = document.getElementById('aboutVideoWrap');
+      if (!video || !wrap) return;
+
+      var hasPlayed = false;
+
+      function tryPlay() {
+        if (hasPlayed || !video.src) return;
+        video.muted = true;
+        var p = video.play();
+        if (p && typeof p.then === 'function') {
+          p.then(function () { hasPlayed = true; }).catch(function () {});
+        } else {
+          hasPlayed = true;
+        }
+      }
 
       fetch(API)
         .then(function (r) { return r.json(); })
@@ -282,11 +288,23 @@
             if (data.poster) video.poster = data.poster;
             video.style.display = 'block';
             if (placeholder) placeholder.style.display = 'none';
+
+            if ('IntersectionObserver' in window) {
+              var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting) {
+                    tryPlay();
+                    obs.unobserve(wrap);
+                  }
+                });
+              }, { threshold: 0.4 });
+              obs.observe(wrap);
+            } else {
+              tryPlay();
+            }
           }
         })
-        .catch(function () {
-          /* keep placeholder if API unavailable */
-        });
+        .catch(function () {});
     })();
   </script>
 </body>
