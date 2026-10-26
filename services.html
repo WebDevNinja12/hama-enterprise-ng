@@ -6,6 +6,7 @@
   <title>Services | Hama Enterprise.ng</title>
   <link rel="icon" type="image/png" href="/logo.png">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="motto.css">
 </head>
 <body>
   <header>
@@ -192,7 +193,6 @@
     const nav = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
 
-    // FAQ accordion
     document.querySelectorAll('.faq-question').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var item = btn.closest('.faq-item');
@@ -208,5 +208,6 @@
       });
     });
   </script>
+  <script src="whatsapp.js"></script>
 </body>
 </html>
