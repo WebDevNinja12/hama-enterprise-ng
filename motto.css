@@ -1,0 +1,19 @@
+/* Company motto styles */
+.hero-motto {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.95;
+  margin-bottom: 0.85rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.footer-motto {
+  font-style: italic;
+  opacity: 0.95;
+  margin-top: 0.75rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+  color: #7dd3fc;
+}

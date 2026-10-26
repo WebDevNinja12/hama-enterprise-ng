@@ -6,6 +6,7 @@
   <title>About Us | Hama Enterprise.ng</title>
   <link rel="icon" type="image/png" href="/logo.png">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="motto.css">
 </head>
 <body>
   <header>
@@ -33,6 +34,7 @@
 
   <section class="hero" style="padding: 0; min-height: 320px; background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('aboutus.png') center/cover no-repeat; display: flex; align-items: center;">
     <div class="container" style="text-align: center;">
+      <p class="hero-motto">Building Innovation Through Quality and Trust</p>
       <h1 style="color: white; margin-bottom: 0.75rem;">About Hama Enterprise.ng</h1>
       <p style="color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto;">A registered Nigerian company committed to excellence, integrity, and sustainable growth.</p>
     </div>
@@ -44,6 +46,7 @@
         <div class="about-content">
           <h2>Our Story</h2>
           <p>Hama Enterprise.ng was founded by <strong>two people</strong> in <strong>2025</strong> (RC: 8827959) with a clear vision: to deliver reliable, high-quality services that support businesses and communities across Nigeria.</p>
+          <p>Our motto — <em>Building Innovation Through Quality and Trust</em> — guides everything we do.</p>
           <p>We operate across four main sectors — Construction, Information Technology, Logistics, and Product Sales — with dedicated heads leading each area.</p>
           <p>Our team combines experience, innovation, and a deep understanding of the local market to create solutions that truly make a difference.</p>
           <div class="stats">
@@ -58,14 +61,7 @@
             <p>Company promo video</p>
             <span>Upload from Admin → About Video</span>
           </div>
-          <video
-            id="aboutPromoVideo"
-            controls
-            playsinline
-            muted
-            preload="metadata"
-            style="display:none;"
-          ></video>
+          <video id="aboutPromoVideo" controls playsinline muted preload="metadata" style="display:none;"></video>
         </div>
       </div>
     </div>
@@ -77,7 +73,6 @@
         <h2>Our Leadership</h2>
         <p>Two founders and the heads of our four sectors.</p>
       </div>
-
       <div class="exec-carousel" id="execCarousel">
         <div class="exec-slide active">
           <div class="exec-card">
@@ -91,7 +86,6 @@
             </div>
           </div>
         </div>
-
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -104,7 +98,6 @@
             </div>
           </div>
         </div>
-
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -117,7 +110,6 @@
             </div>
           </div>
         </div>
-
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -130,7 +122,6 @@
             </div>
           </div>
         </div>
-
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -143,7 +134,6 @@
             </div>
           </div>
         </div>
-
         <div class="exec-slide">
           <div class="exec-card">
             <div class="exec-photo">
@@ -157,7 +147,6 @@
           </div>
         </div>
       </div>
-
       <div class="exec-controls">
         <button type="button" class="exec-btn" id="execPrev" aria-label="Previous">‹</button>
         <div class="exec-dots" id="execDots"></div>
@@ -200,6 +189,7 @@
             <img src="logo.png" alt="Hama Enterprise.ng" style="height:40px; background:white; border-radius:6px; padding:4px;" loading="lazy">
             <div class="logo-text"><strong style="color:white;">HAMA</strong><span>ENTERPRISE.NG</span></div>
           </a>
+          <p class="footer-motto">Building Innovation Through Quality and Trust</p>
           <p>Delivering quality solutions and reliable services across Nigeria and beyond.</p>
           <p style="margin-top:0.5rem; font-size:0.85rem; opacity:0.7;">RC: 8827959</p>
         </div>
@@ -222,10 +212,8 @@
       const prevBtn = document.getElementById('execPrev');
       const nextBtn = document.getElementById('execNext');
       if (!slides.length) return;
-
       let index = 0;
       let timer;
-
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.type = 'button';
@@ -234,9 +222,7 @@
         dot.addEventListener('click', () => goTo(i));
         dotsWrap.appendChild(dot);
       });
-
       const dots = dotsWrap.querySelectorAll('.exec-dot');
-
       function goTo(i) {
         slides[index].classList.remove('active');
         dots[index].classList.remove('active');
@@ -245,30 +231,24 @@
         dots[index].classList.add('active');
         resetTimer();
       }
-
       function next() { goTo(index + 1); }
       function prev() { goTo(index - 1); }
-
       function resetTimer() {
         clearInterval(timer);
         timer = setInterval(next, 4500);
       }
-
       prevBtn.addEventListener('click', prev);
       nextBtn.addEventListener('click', next);
       resetTimer();
     })();
 
-    // Load video + autoplay when section is scrolled into view
     (function () {
       const API = 'https://hama-enterprise-store.vercel.app/api/about-video';
       const video = document.getElementById('aboutPromoVideo');
       const placeholder = document.getElementById('aboutVideoPlaceholder');
       const wrap = document.getElementById('aboutVideoWrap');
       if (!video || !wrap) return;
-
       var hasPlayed = false;
-
       function tryPlay() {
         if (hasPlayed || !video.src) return;
         video.muted = true;
@@ -279,32 +259,27 @@
           hasPlayed = true;
         }
       }
-
-      fetch(API)
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data && data.url) {
-            video.src = data.url;
-            if (data.poster) video.poster = data.poster;
-            video.style.display = 'block';
-            if (placeholder) placeholder.style.display = 'none';
-
-            if ('IntersectionObserver' in window) {
-              var obs = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                  if (entry.isIntersecting) {
-                    tryPlay();
-                    obs.unobserve(wrap);
-                  }
-                });
-              }, { threshold: 0.4 });
-              obs.observe(wrap);
-            } else {
-              tryPlay();
-            }
+      fetch(API).then(function (r) { return r.json(); }).then(function (data) {
+        if (data && data.url) {
+          video.src = data.url;
+          if (data.poster) video.poster = data.poster;
+          video.style.display = 'block';
+          if (placeholder) placeholder.style.display = 'none';
+          if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  tryPlay();
+                  obs.unobserve(wrap);
+                }
+              });
+            }, { threshold: 0.4 });
+            obs.observe(wrap);
+          } else {
+            tryPlay();
           }
-        })
-        .catch(function () {});
+        }
+      }).catch(function () {});
     })();
   </script>
 </body>
